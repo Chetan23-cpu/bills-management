@@ -8,6 +8,11 @@ import AddLocationModal from "./addLocationModal";
 
 const Locationpage = () => {
   const [locationAddModal, setLocationAddModal] = useState(false);
+  const [locations, setLocations] = useState([]);
+
+  const handleLocationAdded = (newLocation) => {
+    setLocations((prev) => [...prev, newLocation]);
+  };
   return (
     <>
       <div className={styles.main}>
@@ -26,6 +31,7 @@ const Locationpage = () => {
               {locationAddModal && (
                 <AddLocationModal 
                  onClose={() => setLocationAddModal(false)}
+                 onLocationAdded={handleLocationAdded}
                 />
               )}
             </div>
