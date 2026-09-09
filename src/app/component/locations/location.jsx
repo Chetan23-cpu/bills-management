@@ -2,7 +2,7 @@
 import SideNav from "../sidenav/sidenav";
 import styles from "./location.module.css";
 import Topnav from "../topnav/topnav";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddLocationModal from "./addLocationModal";
 import { MdEditDocument } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
@@ -12,6 +12,23 @@ import { MdPageview } from "react-icons/md";
 const Locationpage = () => {
   const [locationAddModal, setLocationAddModal] = useState(false);
   const [locations, setLocations] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchLocations = async () => {
+    setLoading(true);
+    try{
+      const res = await fetch("/api/locations");
+      const data = await res.json();
+      setLocations(Array.inArray(data) ? data: []);
+    } catch (err){
+      console.error("Failed to fetch locations", err)
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchLocations();
+  }, []);
 
   const handleLocationAdded = (newLocation) => {
     setLocations((prev) => [...prev, newLocation]);
