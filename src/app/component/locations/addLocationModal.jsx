@@ -20,7 +20,7 @@ const AddLocationModal = ({ onClose, onLocationAdded }) => {
 
       const res = await fetch("/api/locations", {
         method: "POST",
-        header: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: name.trim() }),
       });
       if (!res.ok) {
@@ -37,7 +37,7 @@ const AddLocationModal = ({ onClose, onLocationAdded }) => {
     } catch (err) {
       setError(err.message || "Failed to add location");
     } finally {
-      isSubmitting(false);
+      setIsSubmitting(false);
     }
   };
   return (
